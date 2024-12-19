@@ -3,14 +3,22 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-# Habilitar CORS para que el frontend pueda comunicarse con el backend
+# Permitir acceso desde cualquier origen
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Cambia esto a la URL de tu frontend en producción
+    allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-@app.get("/")
-def read_root():
-    return {"message": "¡Bienvenido al backend con FastAPI!"}
+# Datos de ejemplo para la tabla de posiciones
+data = [
+    {"posicion": 1, "usuario": "Juan", "mensajes": 125},
+    {"posicion": 2, "usuario": "María", "mensajes": 110},
+    {"posicion": 3, "usuario": "Pedro", "mensajes": 95},
+    {"posicion": 4, "usuario": "Ana", "mensajes": 87},
+]
+
+@app.get("/posiciones")
+def obtener_posiciones():
+    return {"posiciones": data}
